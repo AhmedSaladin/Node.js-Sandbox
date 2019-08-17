@@ -10,6 +10,7 @@ app.set('views', 'views');
 // routes
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
+const errorController = require('./controllers/error');
 
 // middleware
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -20,9 +21,7 @@ app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 
 //middleware handle unknown routes
-app.use((req, res, next) => {
-  res.status(404).render('404', { pageTitle: 'Page Not Found', path: '' });
-});
+app.use(errorController.get404);
 
 // port setup
 app.listen(3000, () => {
