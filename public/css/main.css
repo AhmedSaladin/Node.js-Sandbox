@@ -18,6 +18,9 @@ main {
 form {
   display: inline;
 }
+.centerd {
+  text-align: center;
+}
 
 .main-header {
   width: 100%;
