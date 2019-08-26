@@ -2,9 +2,7 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-
-//database
-const db = require('./util/database');
+const sequelize = require('./util/database');
 
 //set template engine
 app.set('view engine', 'ejs');
@@ -26,7 +24,13 @@ app.use(shopRoutes);
 //middleware handle unknown routes
 app.use(errorController.get404);
 
-// port setup
-app.listen(3000, () => {
-  console.log('Server is running');
-});
+//database setup
+sequelize
+  .sync() //check if there are tables in database to avoid override them
+  .then(() => {
+    // port setup
+    app.listen(3000, () => {
+      console.log('Server is running');
+    });
+  })
+  .catch(err => console.log(err));
