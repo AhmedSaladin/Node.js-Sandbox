@@ -10,14 +10,12 @@
   },
   "author": "Ahmed Saladin",
   "license": "ISC",
-  "devDependencies": {
-    "nodemon": "^1.18.3"
-  },
+  "devDependencies": {},
   "dependencies": {
     "body-parser": "^1.18.3",
     "ejs": "^2.6.2",
     "express": "^4.16.3",
-    "express-handlebars": "^3.1.0",
-    "pug": "^2.0.4"
+    "mysql2": "^1.6.5",
+    "nodemon": "^1.19.1"
   }
 }
