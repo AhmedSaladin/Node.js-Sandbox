@@ -2,9 +2,7 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-
-//database
-const mongoConnect = require('./util/database').mongoConnect;
+const mongoose = require('mongoose');
 
 //models
 const User = require('./models/user');
@@ -37,6 +35,13 @@ app.use(shopRoutes);
 //middleware handle unknown routes
 app.use(errorController.get404);
 
-mongoConnect(() => {
-  app.listen(3000, () => console.log('server is running'));
-});
+//database
+mongoose
+  .connect(
+    'mongodb+srv://Yuri:0106781075@shop-w1yt3.mongodb.net/shop?retryWrites=true&w=majority',
+    { useNewUrlParser: true }
+  )
+  .then(() => {
+    app.listen(3000, () => console.log('server is running'));
+  })
+  .catch(err => console.log(err));
