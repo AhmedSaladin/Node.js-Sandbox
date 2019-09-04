@@ -1,9 +1,17 @@
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
-const app = express();
 const mongoose = require('mongoose');
 const session = require('express-session');
+const MongoDBStore = require('connect-mongodb-session')(session);
+
+const MongoDB = 'mongodb+srv://Yuri:0106781075@shop-w1yt3.mongodb.net/shop';
+
+const app = express();
+const store = new MongoDBStore({
+  uri: MongoDB,
+  collection: 'sessions'
+});
 
 //models
 const User = require('./models/user');
@@ -22,7 +30,12 @@ const errorController = require('./controllers/error');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(
-  session({ secret: 'my secret', resave: false, saveUninitialized: false })
+  session({
+    secret: 'my secret',
+    resave: false,
+    saveUninitialized: false,
+    store: store
+  })
 );
 app.use((req, res, next) => {
   User.findById('5d6beace440e4d1d90aa7f91')
@@ -43,10 +56,7 @@ app.use(errorController.get404);
 
 //database
 mongoose
-  .connect(
-    'mongodb+srv://Yuri:0106781075@shop-w1yt3.mongodb.net/shop?retryWrites=true&w=majority',
-    { useNewUrlParser: true }
-  )
+  .connect(MongoDB, { useNewUrlParser: true })
   .then(() => {
     User.findOne().then(user => {
       if (!user) {
