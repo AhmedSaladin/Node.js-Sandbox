@@ -24,3 +24,34 @@ exports.postLogout = (req, res, next) => {
     res.redirect('/');
   });
 };
+
+exports.getSignup = (req, res, next) => {
+  res.render('auth/signup', {
+    path: '/signup',
+    pageTitle: 'Signup',
+    isAuthenticated: false
+  });
+};
+
+exports.postSignup = (req, res, next) => {
+  const email = req.body.email;
+  const password = req.body.password;
+  const confirmpassword = req.body.confirmpassword;
+  User.findOne({ email: email })
+    .then(userDoc => {
+      if (userDoc) {
+        return res.redirect('/signup');
+      }
+      const user = new User({
+        email: email,
+        password: password,
+        cart: { items: [] }
+      });
+      console.log(email);
+      return user.save();
+    })
+    .then(() => {
+      res.redirect('/login');
+    })
+    .catch(err => console.log(err));
+};
