@@ -15,6 +15,7 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "connect-mongodb-session": "^2.2.0",
+    "csurf": "^1.10.0",
     "ejs": "^2.6.2",
     "express": "^4.16.3",
     "express-session": "^1.16.2",
