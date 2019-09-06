@@ -5,7 +5,9 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const csrf = require('csurf');
+const flash = require('connect-flash');
 
+//database link
 const MongoDB = 'mongodb+srv://Yuri:0106781075@shop-w1yt3.mongodb.net/shop';
 
 //setup express
@@ -33,7 +35,7 @@ const shopRoutes = require('./routes/shop');
 const authRoutes = require('./routes/auth');
 const errorController = require('./controllers/error');
 
-// middlewares
+//////////////////// middlewares ////////////////////
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -49,6 +51,9 @@ app.use(
 
 //set csrf middleware
 app.use(csrfProtection);
+
+//setup flash
+app.use(flash());
 
 //set session middleware
 app.use((req, res, next) => {
