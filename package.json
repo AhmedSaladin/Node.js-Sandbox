@@ -20,6 +20,7 @@
     "ejs": "^2.6.2",
     "express": "^4.16.3",
     "express-session": "^1.16.2",
+    "express-validator": "^6.2.0",
     "mongoose": "^5.6.11",
     "nodemailer": "^6.3.0",
     "nodemailer-sendgrid-transport": "^0.2.0",
