@@ -120,10 +120,26 @@ exports.postCart = (req, res, next) => {
 
 //
 exports.getCheckout = (req, res, next) => {
-  res.render('shop/checkout', {
-    pageTitle: 'Checkout',
-    path: '/checkout'
-  });
+  req.user
+    .populate('cart.items.productId')
+    .execPopulate()
+    .then(user => {
+      let total = 0;
+      const products = user.cart.items;
+      products.forEach(p => {
+        total += p.quantity * p.productId.price;
+      })
+      res.render('shop/checkout', {
+        pageTitle: 'CheckOut',
+        path: '/checkout',
+        products: products,
+        totalPrice:total
+      });
+    })
+    .catch(err => {
+      const error = new Error(err);
+      return next(error);
+    });
 };
 
 //

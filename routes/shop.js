@@ -33,7 +33,7 @@ router.get('/checkout', auth, shopController.getCheckout);
 //orders => GET
 router.get('/orders', auth, shopController.getOrders);
 
-//orders/invoiceId => GET
+//orders/orderId => GET
 router.get('/orders/:orderId', auth, shopController.getInvoice);
 
 module.exports = router;
