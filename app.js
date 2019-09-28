@@ -1,12 +1,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-
+const mongoose = require('mongoose');
+const path = require('path');
 const feedRoutes = require('./routes/feed');
 
 // app.use(bodyParser.urlencoded({}));
 
 app.use(express.json());
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 //disable CORS
 app.use((req, res, next) => {
@@ -21,4 +23,12 @@ app.use((req, res, next) => {
 
 app.use('/feed', feedRoutes);
 
-app.listen('8080', () => console.log('Server is running on port 8080'));
+mongoose
+  .connect(
+    'mongodb+srv://Yuri:0106781075@shop-w1yt3.mongodb.net/messages?retryWrites=true&w=majority',
+    { useNewUrlParser: true }
+  )
+  .then(() => {
+    app.listen('8080', () => console.log('Server is running on port 8080'));
+  })
+  .catch(err => console.log(err));
