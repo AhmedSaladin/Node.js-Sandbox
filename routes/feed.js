@@ -4,7 +4,8 @@ const feedController = require('../controllers/feed');
 const { body } = require('express-validator');
 
 router.get('/posts', feedController.getPosts);
-
+router.get('/post/:postId', feedController.getPost);
+router.delete('/post/:postId', feedController.deletePost);
 router.post(
   '/post',
   [
@@ -17,7 +18,6 @@ router.post(
   ],
   feedController.createPost
 );
-router.get('/post/:postId', feedController.getPost);
 router.put(
   '/post/:postId',
   [
