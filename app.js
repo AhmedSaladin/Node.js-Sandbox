@@ -1,16 +1,44 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const app = express();
 const mongoose = require('mongoose');
 const path = require('path');
+const multer = require('multer');
+
+//
 const feedRoutes = require('./routes/feed');
 
-// app.use(bodyParser.urlencoded({}));
+//Multer Configure
+const fileStorage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, 'images');
+  },
+  filename: function(req, file, cb) {
+    let a = Math.random() * 10;
+    cb(null, a + file.originalname);
+  }
+});
+const fileFilter = (req, file, cb) => {
+  if (
+    file.mimetype === 'image/png' ||
+    file.mimetype === 'image/jpg' ||
+    file.mimetype === 'image/jpeg'
+  ) {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
 
 app.use(express.json());
 app.use('/images', express.static(path.join(__dirname, 'images')));
+app.use(
+  multer({
+    storage: fileStorage,
+    fileFilter: fileFilter
+  }).single('image')
+);
 
-//disable CORS
+//Disable CORS
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*'); // star means it enable for all domains
   res.setHeader(
@@ -21,6 +49,7 @@ app.use((req, res, next) => {
   next();
 });
 
+//Routes
 app.use('/feed', feedRoutes);
 
 //error middleware
@@ -31,6 +60,7 @@ app.use((error, req, res, next) => {
   res.status(status).json({ message: message });
 });
 
+//Database connection
 mongoose
   .connect(
     'mongodb+srv://Yuri:0106781075@shop-w1yt3.mongodb.net/messages?retryWrites=true&w=majority',
