@@ -5,10 +5,21 @@ const Post = require('../models/post');
 
 ////Fetch All Posts
 exports.getPosts = (req, res, next) => {
+  const currentPage = req.query.page || 1;
+  const perPage = 2;
+  let totalItem;
   Post.find()
+    .countDocuments()
+    .then(count => {
+      totalItem = count;
+      return Post.find()
+        .skip((currentPage - 1) * perPage)
+        .limit(perPage);
+    })
     .then(posts => {
       res.status(200).json({
-        posts: posts
+        posts: posts,
+        totalItems: totalItem
       });
     })
     .catch(err => {
