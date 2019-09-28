@@ -23,6 +23,14 @@ app.use((req, res, next) => {
 
 app.use('/feed', feedRoutes);
 
+//error middleware
+app.use((error, req, res, next) => {
+  console.log(error);
+  const status = error.statusCode || 500;
+  const message = error.message;
+  res.status(status).json({ message: message });
+});
+
 mongoose
   .connect(
     'mongodb+srv://Yuri:0106781075@shop-w1yt3.mongodb.net/messages?retryWrites=true&w=majority',
