@@ -13,20 +13,11 @@
   "devDependencies": {},
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "body-parser": "^1.18.3",
-    "connect-flash": "^0.1.1",
-    "connect-mongodb-session": "^2.2.0",
-    "csurf": "^1.10.0",
-    "ejs": "^2.6.2",
     "express": "^4.16.3",
-    "express-session": "^1.16.2",
     "express-validator": "^6.2.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.6.11",
     "multer": "^1.4.2",
-    "nodemailer": "^6.3.0",
-    "nodemailer-sendgrid-transport": "^0.2.0",
-    "nodemon": "^1.19.1",
-    "pdfkit": "^0.10.0"
+    "nodemon": "^1.19.1"
   }
 }
