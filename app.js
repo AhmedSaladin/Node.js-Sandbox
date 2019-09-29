@@ -70,6 +70,13 @@ mongoose
     { useNewUrlParser: true }
   )
   .then(() => {
-    app.listen('8080', () => console.log('Server is running on port 8080'));
+    const server = app.listen('8080', () =>
+      console.log('Server is running on port 8080')
+    );
+    //setup socket.io
+    const io = require('./socket').init(server);
+    io.on('connection', socket => {
+      console.log('Client connected');
+    });
   })
   .catch(err => console.log(err));
