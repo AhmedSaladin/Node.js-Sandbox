@@ -4,6 +4,11 @@ const mongoose = require('mongoose');
 const path = require('path');
 const multer = require('multer');
 
+//Graphql setup
+const graphqlHttp = require('express-graphql');
+const graphqlSchema = require('./graphql/schema');
+const graphqlResolver = require('./graphql/resolvers');
+
 //Multer Configure
 const fileStorage = multer.diskStorage({
   destination: function(req, file, cb) {
@@ -45,6 +50,15 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   next();
 });
+
+app.use(
+  '/graphql',
+  graphqlHttp({
+    schema: graphqlSchema,
+    rootValue: graphqlResolver,
+    graphiql: true
+  })
+);
 
 //error middleware
 app.use((error, req, res, next) => {
