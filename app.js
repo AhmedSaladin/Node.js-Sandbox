@@ -4,10 +4,6 @@ const mongoose = require('mongoose');
 const path = require('path');
 const multer = require('multer');
 
-////
-const feedRoutes = require('./routes/feed');
-const userRoutes = require('./routes/auth');
-
 //Multer Configure
 const fileStorage = multer.diskStorage({
   destination: function(req, file, cb) {
@@ -50,10 +46,6 @@ app.use((req, res, next) => {
   next();
 });
 
-//Routes
-app.use('/feed', feedRoutes);
-app.use('/auth', userRoutes);
-
 //error middleware
 app.use((error, req, res, next) => {
   console.log(error);
@@ -70,13 +62,6 @@ mongoose
     { useNewUrlParser: true }
   )
   .then(() => {
-    const server = app.listen('8080', () =>
-      console.log('Server is running on port 8080')
-    );
-    //setup socket.io
-    const io = require('./socket').init(server);
-    io.on('connection', socket => {
-      console.log('Client connected');
-    });
+    app.listen('8080', () => console.log('Server is running on port 8080'));
   })
   .catch(err => console.log(err));
