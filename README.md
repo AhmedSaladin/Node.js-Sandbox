@@ -10,6 +10,6 @@ Learn about handlebars synatx and how to setup it with express to build some sta
 My favorit template engine and i use it for practice and this branch ended with use database "mysql" and with ORM "sequlize" to adding data
 and the project in this branch is online store
 # EJS-Template-Engine-by-mongo-db
- The same with last branch just change database engine to"Nosql"and mongoose as ODM adn adding session &cookies  to be more secure then adding payment with stripe api and enable password reset with sendgrid emails adding validation to validate data on server side improve error handling and enable file uploads and generate invoice with pdfkit and adding pagination 
+ The same with last branch just change database engine to"NoSQL" and mongoose as ODM and adding session & cookies to be more secure then adding payment with stripe api and enable password reset with sendgrid emails adding validation to validate data on server side improve error handling and enable file uploads and generate invoice with pdfkit and adding pagination 
 # REST-API
 working on blog api and play around with webSocket 
